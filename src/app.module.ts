@@ -40,13 +40,10 @@ import { ChatModule } from "./chat/chat.module";
         transformOptions: {
           enableImplicitConversion: true
         },
-        // TODO: enable these based on env
         validationError: {
           target: true,
           value: true
         }
-        // disableErrorMessages: true,
-        // enableDebugMessages: true,
       })
     },
     {

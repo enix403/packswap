@@ -7,6 +7,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AppConfigService } from "@/framework/config/appconfig.service";
 import { ImageModule } from "@/image/image.module";
 import { UserProfileImage } from "./entities/user-profile-image.entity";
+import { MeController } from "./me.controller";
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { UserProfileImage } from "./entities/user-profile-image.entity";
     TypeOrmModule.forFeature([User, UserProfileImage]),
     ImageModule
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, MeController],
   providers: [AuthService],
   exports: [AuthService]
 })
