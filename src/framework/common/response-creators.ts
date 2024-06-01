@@ -12,9 +12,12 @@ export function entityUpdated<T extends { id: string | number }>(entt: T) {
   };
 }
 
-
 export function entityDeleted() {
   return {
-    message: "Deleted Successfully",
+    message: "Deleted Successfully"
   };
+}
+
+export function sendMessage(message: string, rest: object = {}) {
+  return { message, ...rest };
 }

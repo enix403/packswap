@@ -108,6 +108,7 @@ export class TravelController {
     //   ? dto.totalCapacity
     //   : travel.totalCapacity;
 
+    // TODO FIXME: this orphans the old TravelStop Rows
     travel.travelStops = dto.travelStops
       ? await this.mapStops(dto.travelStops)
       : travel.travelStops;
@@ -115,6 +116,7 @@ export class TravelController {
     await this.travelRepo.save(travel);
     return entityUpdated(travel);
   }
+
   @Delete(":id")
   @UseAuth()
   public async deleteTravel(

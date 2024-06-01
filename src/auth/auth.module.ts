@@ -5,6 +5,7 @@ import { User } from "./entities/user.entity";
 import { AuthService } from "./auth.service";
 import { JwtModule } from "@nestjs/jwt";
 import { AppConfigService } from "@/framework/config/appconfig.service";
+import { ImageModule } from "@/image/image.module";
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AppConfigService } from "@/framework/config/appconfig.service";
         };
       }
     }),
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
+    ImageModule
   ],
   controllers: [AuthController],
   providers: [AuthService],
