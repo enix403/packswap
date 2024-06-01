@@ -1,7 +1,7 @@
 import { User } from "@/auth/entities/user.entity";
-import { UUIDParam } from "@/common/decorators";
-import { UseAuth, ActiveUser } from "@/common/guards";
-import { entityCreated } from "@/common/response-creators";
+import { UUIDParam } from "@/framework/common/decorators";
+import { UseAuth, ActiveUser } from "@/framework/common/guards";
+import { entityCreated } from "@/framework/common/response-creators";
 import { AddCommentDto, AddReviewDto } from "./dto/add-comment.dto";
 import { Comment, Travel } from "@/travel/entities/stop.entity";
 import { Controller, Post } from "@nestjs/common";

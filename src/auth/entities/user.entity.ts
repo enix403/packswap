@@ -1,7 +1,5 @@
-// import { Exclude } from 'class-transformer';
-
 import { Chat } from "@/chat/entities/chat.entity";
-import { AppBaseEntity } from "@/database/appbase.entity";
+import { AppBaseEntity } from "@/framework/database/appbase.entity";
 import { Image } from "@/images/entities/image.entity";
 import { Comment, Order, Review, Travel } from "@/travel/entities/stop.entity";
 import { Exclude } from "class-transformer";

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 
@@ -22,6 +22,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
       })
     })
   ],
-  exports: [TypeOrmModule]
+  exports: []
 })
 export class DatabaseModule {}

@@ -12,7 +12,7 @@ import {
   SetTravelStopDto,
   UpdateTravelDto
 } from "./dto/create-travel.dto";
-import { ActiveUser, UseAuth } from "@/common/guards";
+import { ActiveUser, UseAuth } from "@/framework/common/guards";
 import { User } from "@/auth/entities/user.entity";
 import { Repository } from "typeorm";
 import { Comment, Review, Stop, Travel, TravelStop } from "./entities/stop.entity";
@@ -21,9 +21,9 @@ import {
   entityCreated,
   entityDeleted,
   entityUpdated
-} from "@/common/response-creators";
-import { UUIDParam } from "@/common/decorators";
-import { paginate } from "@/common/paginate";
+} from "@/framework/common/response-creators";
+import { UUIDParam } from "@/framework/common/decorators";
+import { paginate } from "@/framework/common/paginate";
 
 @Controller("travel")
 export class TravelController {

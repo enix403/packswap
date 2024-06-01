@@ -9,7 +9,7 @@ import {
   UseInterceptors,
   UploadedFile
 } from "@nestjs/common";
-import { ActiveUser, UseAuth } from "@/common/guards";
+import { ActiveUser, UseAuth } from "@/framework/common/guards";
 import { User } from "@/auth/entities/user.entity";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";

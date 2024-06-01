@@ -8,13 +8,23 @@ import {
   Review,
   Comment
 } from "./entities/stop.entity";
-import { TravelController } from './travel.controller';
 import { User } from "@/auth/entities/user.entity";
+import { TravelController } from "./travel.controller";
+import { CommentController } from "./comment.controller";
+import { ReviewController } from "./review.controller";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Stop, Travel, TravelStop, Order, Comment, Review])
+    TypeOrmModule.forFeature([
+      User,
+      Stop,
+      Travel,
+      TravelStop,
+      Order,
+      Comment,
+      Review
+    ])
   ],
-  controllers: [TravelController]
+  controllers: [TravelController, CommentController, ReviewController]
 })
 export class TravelModule {}

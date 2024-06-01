@@ -1,5 +1,5 @@
 import { User } from "@/auth/entities/user.entity";
-import { AppBaseEntity } from "@/database/appbase.entity";
+import { AppBaseEntity } from "@/framework/database/appbase.entity";
 import { Entity, Column, ManyToOne } from "typeorm";
 
 @Entity()

@@ -3,7 +3,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./entities/user.entity";
 import { AuthService } from "./auth.service";
 import { LoginCredentialsDto, LoginResult } from "./dto/login.dto";
-import { ActiveUser, UseAuth } from "@/common/guards";
+import { ActiveUser, UseAuth } from "@/framework/common/guards";
 
 @Controller("auth")
 export class AuthController {

@@ -1,17 +1,16 @@
 import { Module, ValidationPipe } from "@nestjs/common";
 
 import { AppController } from "./app.controller";
-import { AppConfigModule } from "./config/appconfig.module";
-import { DatabaseModule } from "./database/database.module";
+import { AppConfigModule } from "@/framework/config/appconfig.module";
+import { DatabaseModule } from "@/framework/database/database.module";
 
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
-import { TransformToPlainInterceptor } from "./common/transform.interceptor";
-import { TypeOrmNotFoundFilter } from "./execptionfilter";
+import { TransformToPlainInterceptor } from "./transform.interceptor";
+import { TypeOrmNotFoundFilter } from "./typeorm.execptionfilter";
 import { AuthModule } from "./auth/auth.module";
 import { TravelModule } from "./travel/travel.module";
 import { ImagesModule } from "./images/images.module";
 import { ChatModule } from "./chat/chat.module";
-import { CommentModule } from "./comment/comment.module";
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { CommentModule } from "./comment/comment.module";
     TravelModule,
     ImagesModule,
     ChatModule,
-    CommentModule
   ],
   exports: [DatabaseModule],
   controllers: [AppController],
