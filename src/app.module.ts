@@ -1,3 +1,5 @@
+import path from "path";
+
 import { Module, ValidationPipe } from "@nestjs/common";
 
 import { AppController } from "./app.controller";
@@ -11,11 +13,16 @@ import { AuthModule } from "./auth/auth.module";
 import { TravelModule } from "./travel/travel.module";
 import { ImageModule } from "./image/image.module";
 import { ChatModule } from "./chat/chat.module";
+import { ServeStaticModule } from "@nestjs/serve-static";
 
 @Module({
   imports: [
     AppConfigModule,
     DatabaseModule,
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'uploaded-files'),
+      serveRoot: '/uploads'
+    }),
     AuthModule,
     TravelModule,
     ImageModule,

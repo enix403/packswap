@@ -5,7 +5,7 @@ export class AppController {
   @Get()
   public index() {
     return {
-      message: "Welcome to HerbiMed API"
+      message: "Welcome to PackSwap API"
     };
   }
 }
