@@ -3,10 +3,4 @@ import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "type
 export abstract class AppBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

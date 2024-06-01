@@ -1,6 +1,6 @@
 import { User } from "@/auth/entities/user.entity";
 import { AppBaseEntity } from "@/framework/database/appbase.entity";
-import { Entity, Column, ManyToOne } from "typeorm";
+import { Entity, Column, ManyToOne, CreateDateColumn } from "typeorm";
 import { TravelStop } from "./travel-stop.entity";
 import { Travel } from "./travel.entity";
 
@@ -20,4 +20,7 @@ export class Order extends AppBaseEntity {
 
   @ManyToOne(() => User, user => user.orders)
   customer: User;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
