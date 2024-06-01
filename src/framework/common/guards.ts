@@ -45,11 +45,15 @@ export class AuthGuard implements CanActivate {
       const payload = (await this.jwtService.verifyAsync(
         token
       )) as AccessTokenPayload;
-      user = await this.userRepo.findOneBy({ id: payload.userId });
+
+      user = await this.userRepo.findOne({
+        where: { id: payload.userId },
+        loadEagerRelations: false
+      });
+
       request[REQUEST_USER_KEY] = user;
 
-      if (isPublic)
-        return true;
+      if (isPublic) return true;
 
       // const allowedRoles = this.reflector.get<string[]>(
       //   "roles",
@@ -90,6 +94,5 @@ export const ActiveUser = createParamDecorator(
     const request = ctx.switchToHttp().getRequest();
     const user: User | null = request[REQUEST_USER_KEY];
     return (field ? user?.[field] : user) ?? null;
-  },
+  }
 );
-

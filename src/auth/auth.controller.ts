@@ -40,13 +40,13 @@ export class AuthController {
   @UseAuth()
   @AcceptImageUpload()
   public async uploadImage(
-    @ActiveUser() activeUser: User,
+    @ActiveUser("id") userId: string,
     @UploadedFile() imageFile: Express.Multer.File
   ) {
     let repo = this.authService.getUserRepo();
 
     let user = await repo.findOneOrFail({
-      where: { id: activeUser.id },
+      where: { id: userId },
       relations: { profileImage: true }
     });
 
@@ -54,8 +54,7 @@ export class AuthController {
 
     if (user.profileImage) {
       user.profileImage.image = image;
-    }
-    else {
+    } else {
       user.profileImage = this.profileImageRepo.create({ image });
     }
 
