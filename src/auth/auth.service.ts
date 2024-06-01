@@ -20,6 +20,10 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
+  public getUserRepo() {
+    return this.usersRepo;
+  }
+
   public async hashPassword(password: string): Promise<string> {
     const salt = await genSalt();
     return hash(password, salt);

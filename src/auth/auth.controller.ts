@@ -6,12 +6,17 @@ import { LoginCredentialsDto, LoginResult } from "./dto/login.dto";
 import { ActiveUser, UseAuth } from "@/framework/common/guards";
 import { AcceptImageUpload, ImageService } from "@/image/image.service";
 import { sendMessage } from "@/framework/common/response-creators";
+import { Repository } from "typeorm";
+import { UserProfileImage } from "./entities/user-profile-image.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly imageService: ImageService
+    private readonly imageService: ImageService,
+    @InjectRepository(UserProfileImage)
+    private readonly profileImageRepo: Repository<UserProfileImage>,
   ) {}
 
   @Post("sign-up")
@@ -36,9 +41,17 @@ export class AuthController {
   @AcceptImageUpload()
   public async uploadImage(
     @ActiveUser() user: User,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() imageFile: Express.Multer.File
   ) {
-    await this.imageService.saveImage(image, { user });
+    let image = await this.imageService.saveImage(imageFile, { user });
+
+    let repo = this.authService.getUserRepo();
+    user.profileImage = this.profileImageRepo.create({
+      image
+    })
+
+    await repo.save(user);
+
     return sendMessage("Uploaded successfully");
   }
 }

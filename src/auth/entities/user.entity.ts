@@ -6,7 +6,8 @@ import { Review } from "@/travel/entities/review.entity";
 import { Travel } from "@/travel/entities/travel.entity";
 import { Comment } from "@/travel/entities/comment.entity";
 import { Exclude } from "class-transformer";
-import { Column, Entity, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { UserProfileImage } from "./user-profile-image.entity";
 
 @Entity()
 export class User extends AppBaseEntity {
@@ -26,8 +27,14 @@ export class User extends AppBaseEntity {
   @Column({ unique: true })
   cnic: string;
 
-  // @OneToOne(() => Image, image => image.user, { nullable: true, eager: true })
-  // profileImage?: Image;
+  @OneToOne(() => UserProfileImage, profileImage => profileImage.user, {
+    nullable: true,
+    eager: true,
+    cascade: true,
+    orphanedRowAction: 'delete'
+  })
+  @JoinColumn()
+  profileImage?: UserProfileImage;
 
   @OneToMany(() => Travel, travel => travel.user, { cascade: true })
   travels: Travel[];
