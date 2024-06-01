@@ -3,10 +3,12 @@ import { UUIDParam } from "@/framework/common/decorators";
 import { UseAuth, ActiveUser } from "@/framework/common/guards";
 import { entityCreated } from "@/framework/common/response-creators";
 import { AddReviewDto } from "./dto/add-comment.dto";
-import { Review, Travel } from "@/travel/entities/stop.entity";
+// import { Review, Travel } from "@/travel/entities/stop.entity";
 import { Controller, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { Review } from "./entities/review.entity";
+import { Travel } from "./entities/travel.entity";
 
 @Controller("review")
 export class ReviewController {

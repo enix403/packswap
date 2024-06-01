@@ -15,7 +15,7 @@ import {
 import { ActiveUser, UseAuth } from "@/framework/common/guards";
 import { User } from "@/auth/entities/user.entity";
 import { Repository } from "typeorm";
-import { Comment, Review, Stop, Travel, TravelStop } from "./entities/stop.entity";
+// import { Comment, Review, Stop, Travel, TravelStop } from "./entities/stop.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import {
   entityCreated,
@@ -24,18 +24,18 @@ import {
 } from "@/framework/common/response-creators";
 import { UUIDParam } from "@/framework/common/decorators";
 import { paginate } from "@/framework/common/paginate";
+import { Review } from "./entities/review.entity";
+import { Stop } from "./entities/stop.entity";
+import { TravelStop } from "./entities/travel-stop.entity";
+import { Travel } from "./entities/travel.entity";
 
 @Controller("travel")
 export class TravelController {
   constructor(
     @InjectRepository(Travel)
     private readonly travelRepo: Repository<Travel>,
-    @InjectRepository(Comment)
-    private readonly commentRepo: Repository<Comment>,
     @InjectRepository(Stop)
     private readonly stopRepo: Repository<Stop>,
-    @InjectRepository(Review)
-    private readonly reviewRepo: Repository<Review>
   ) {}
 
   private async mapStops(stopDtos: SetTravelStopDto[]) {

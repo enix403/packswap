@@ -1,7 +1,10 @@
 import { Chat } from "@/chat/entities/chat.entity";
 import { AppBaseEntity } from "@/framework/database/appbase.entity";
 import { Image } from "@/images/entities/image.entity";
-import { Comment, Order, Review, Travel } from "@/travel/entities/stop.entity";
+import { Order } from "@/travel/entities/order.entity";
+import { Review } from "@/travel/entities/review.entity";
+import { Travel } from "@/travel/entities/travel.entity";
+import { Comment } from "@/travel/entities/comment.entity";
 import { Exclude } from "class-transformer";
 import { Column, Entity, OneToMany, OneToOne } from "typeorm";
 
