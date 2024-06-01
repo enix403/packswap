@@ -16,7 +16,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly imageService: ImageService,
     @InjectRepository(UserProfileImage)
-    private readonly profileImageRepo: Repository<UserProfileImage>,
+    private readonly profileImageRepo: Repository<UserProfileImage>
   ) {}
 
   @Post("sign-up")
@@ -40,15 +40,24 @@ export class AuthController {
   @UseAuth()
   @AcceptImageUpload()
   public async uploadImage(
-    @ActiveUser() user: User,
+    @ActiveUser() activeUser: User,
     @UploadedFile() imageFile: Express.Multer.File
   ) {
+    let repo = this.authService.getUserRepo();
+
+    let user = await repo.findOneOrFail({
+      where: { id: activeUser.id },
+      relations: { profileImage: true }
+    });
+
     let image = await this.imageService.saveImage(imageFile, { user });
 
-    let repo = this.authService.getUserRepo();
-    user.profileImage = this.profileImageRepo.create({
-      image
-    })
+    if (user.profileImage) {
+      user.profileImage.image = image;
+    }
+    else {
+      user.profileImage = this.profileImageRepo.create({ image });
+    }
 
     await repo.save(user);
 

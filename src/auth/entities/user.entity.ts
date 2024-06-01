@@ -30,10 +30,8 @@ export class User extends AppBaseEntity {
   @OneToOne(() => UserProfileImage, profileImage => profileImage.user, {
     nullable: true,
     eager: true,
-    cascade: true,
-    orphanedRowAction: 'delete'
+    cascade: true
   })
-  @JoinColumn()
   profileImage?: UserProfileImage;
 
   @OneToMany(() => Travel, travel => travel.user, { cascade: true })

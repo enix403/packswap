@@ -36,9 +36,11 @@ export class AuthService {
     return compare(password, hash);
   }
 
-  public async createUser(userDto: CreateUserDto): Promise<User> {
+  public async createUser(userDto: CreateUserDto, setId?: string | undefined): Promise<User> {
     let user = new User();
 
+    if (setId)
+      user.id = setId;
     user.email = userDto.email;
     user.password = await this.hashPassword(userDto.password);
     user.firstName = userDto.firstName;

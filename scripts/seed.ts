@@ -36,13 +36,16 @@ class SeederService {
 
   private async addUsers() {
     for (let i = 1; i <= 12; ++i) {
-      await this.authService.createUser({
-        email: `user${i}@gmail.com`,
-        password: "pass",
-        firstName: "User",
-        lastName: `${i}`,
-        cnic: getRandomInt(111111111111, 999999999999).toString()
-      });
+      await this.authService.createUser(
+        {
+          email: `user${i}@gmail.com`,
+          password: "pass",
+          firstName: "User",
+          lastName: `${i}`,
+          cnic: getRandomInt(111111111111, 999999999999).toString()
+        },
+        i == 1 ? "7ed64991-f562-4e11-916a-18935d4840f1" : undefined
+      );
     }
   }
 }
