@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UploadedFile } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  UploadedFile
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./entities/user.entity";
 import { AuthService } from "./auth.service";
@@ -32,8 +39,13 @@ export class AuthController {
 
   @Get("me")
   @UseAuth()
-  public async getMe(@ActiveUser() user: User): Promise<User> {
-    return user;
+  public async getMe(@ActiveUser("id") userId: string): Promise<User> {
+    return this.authService.getUserRepo().findOneOrFail({
+      where: { id: userId },
+      relations: {
+        profileImage: true
+      }
+    });
   }
 
   @Post("me/upload-image")
@@ -61,5 +73,14 @@ export class AuthController {
     await repo.save(user);
 
     return sendMessage("Uploaded successfully");
+  }
+
+  @Delete("me/remove-image")
+  @UseAuth()
+  public async remoevImage(
+    @ActiveUser() user: User,
+  ) {
+    await this.profileImageRepo.delete({ user });
+    return sendMessage("Removed successfully");
   }
 }
