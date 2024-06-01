@@ -4,17 +4,17 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { AuthService } from "./auth.service";
 import { JwtModule } from "@nestjs/jwt";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { AppConfigService } from "@/framework/config/appconfig.service";
 
 @Module({
   imports: [
     JwtModule.registerAsync({
       global: true,
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
+      imports: [],
+      inject: [AppConfigService],
+      useFactory: (configService: AppConfigService) => {
         return {
-          secret: configService.get<string>("jwt.secret"),
+          secret: configService.c.jwt.secret
           // signOptions: {},
           // verifyOptions: {}
         };
