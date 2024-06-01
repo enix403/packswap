@@ -1,6 +1,6 @@
 import { Chat } from "@/chat/entities/chat.entity";
 import { AppBaseEntity } from "@/framework/database/appbase.entity";
-import { Image } from "@/images/entities/image.entity";
+// import { Image } from "@/images/entities/image.entity";
 import { Order } from "@/travel/entities/order.entity";
 import { Review } from "@/travel/entities/review.entity";
 import { Travel } from "@/travel/entities/travel.entity";
@@ -26,8 +26,8 @@ export class User extends AppBaseEntity {
   @Column({ unique: true })
   cnic: string;
 
-  @OneToOne(() => Image, image => image.user, { nullable: true, eager: true })
-  profileImage?: Image;
+  // @OneToOne(() => Image, image => image.user, { nullable: true, eager: true })
+  // profileImage?: Image;
 
   @OneToMany(() => Travel, travel => travel.user, { cascade: true })
   travels: Travel[];

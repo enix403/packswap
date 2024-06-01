@@ -8,7 +8,10 @@ export class Image extends AppBaseEntity {
   @Column()
   url: string;
 
-  @OneToOne(() => User, { onDelete: 'CASCADE', nullable: true })
+  @OneToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn()
   user?: User;
+
+  @Column()
+  kind: string;
 }

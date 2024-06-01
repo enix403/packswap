@@ -89,7 +89,7 @@ export const ActiveUser = createParamDecorator(
   (field: keyof User | undefined, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     const user: User | null = request[REQUEST_USER_KEY];
-    return field ? user?.[field] : user;
+    return (field ? user?.[field] : user) ?? null;
   },
 );
 

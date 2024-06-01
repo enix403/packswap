@@ -9,7 +9,7 @@ import { TransformToPlainInterceptor } from "./transform.interceptor";
 import { TypeOrmNotFoundFilter } from "./typeorm.execptionfilter";
 import { AuthModule } from "./auth/auth.module";
 import { TravelModule } from "./travel/travel.module";
-import { ImagesModule } from "./images/images.module";
+import { ImageModule } from "./image/image.module";
 import { ChatModule } from "./chat/chat.module";
 
 @Module({
@@ -18,7 +18,7 @@ import { ChatModule } from "./chat/chat.module";
     DatabaseModule,
     AuthModule,
     TravelModule,
-    ImagesModule,
+    ImageModule,
     ChatModule,
   ],
   exports: [DatabaseModule],
