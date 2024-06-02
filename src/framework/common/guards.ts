@@ -17,6 +17,7 @@ import { AccessTokenPayload } from "@/auth/auth.service";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "@/auth/entities/user.entity";
 import { Repository } from "typeorm";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 export const REQUEST_USER_KEY = "user";
 
@@ -83,6 +84,7 @@ export class AuthGuard implements CanActivate {
 
 export function UseAuth(roles?: string[], opts?: { allowPublic?: boolean }) {
   return applyDecorators(
+    ApiBearerAuth(),
     SetMetadata("roles", roles ?? []),
     ...(opts?.allowPublic ? [SetMetadata("isPublic", true)] : []),
     UseGuards(AuthGuard)

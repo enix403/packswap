@@ -40,7 +40,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
         whitelist: true,
         forbidUnknownValues: true,
         forbidNonWhitelisted: true,
-        stopAtFirstError: true,
+        // stopAtFirstError: true,
         validateCustomDecorators: false,
         transformOptions: {
           enableImplicitConversion: true

@@ -12,7 +12,7 @@ import { sendMessage } from "@/framework/common/response-creators";
 import { Repository } from "typeorm";
 import { UserProfileImage } from "./entities/user-profile-image.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('Me')
 @Controller("me")
