@@ -31,17 +31,21 @@ export class CommentController {
 
   @Post()
   @UseAuth()
-  public async addComment(@ActiveUser() user: User, @Body() dto: AddCommentDto) {
+  public async addComment(
+    @ActiveUser() user: User,
+    @Body() dto: AddCommentDto
+  ) {
     let travel = await this.travelRepo.findOneOrFail({
-      where: { id: dto.travelId }
+      where: { id: dto.travelId, user }
     });
-    let comment = new Comment();
-    comment.body = dto.body;
-    comment.travel = travel;
-    comment.user = user;
 
-    comment = await this.commentRepo.save(comment);
-    return entityCreated(comment);
+    return entityCreated(
+      await this.commentRepo.save({
+        body: dto.body,
+        travel,
+        user
+      })
+    );
   }
 
   @Patch(":id")

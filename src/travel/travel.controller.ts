@@ -152,8 +152,9 @@ export class TravelController {
       .where("t.id = :id", { id })
       .leftJoinAndSelect("t.travelStops", "tstop")
       .leftJoinAndSelect("tstop.stop", "stop")
-      .leftJoinAndSelect("t.comments", "comment")
       .leftJoinAndSelect("t.reviews", "review")
+      .leftJoinAndSelect("t.comments", "comment")
+      .leftJoinAndSelect("comment.user", "c_user")
       .getOneOrFail();
   }
 }

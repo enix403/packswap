@@ -33,14 +33,14 @@ export class ReviewController {
       where: { id: dto.travelId }
     });
 
-    let review = new Review();
-    review.body = dto.body;
-    review.rating = dto.rating;
-    review.travel = travel;
-    review.user = user;
-
-    review = await this.reviewRepo.save(review);
-    return entityCreated(review);
+    return entityCreated(
+      await this.reviewRepo.save({
+        body: dto.body,
+        rating: dto.rating,
+        travel,
+        user
+      })
+    );
   }
 
   @Patch(":id")
