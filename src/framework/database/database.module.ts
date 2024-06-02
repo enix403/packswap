@@ -16,7 +16,6 @@ import { AppConfigService } from "../config/appconfig.service";
           username: dbConfig.username,
           password: dbConfig.password,
           database: dbConfig.name,
-          applicationName: "PackSwap",
           entities: [],
           synchronize: true,
           autoLoadEntities: true,

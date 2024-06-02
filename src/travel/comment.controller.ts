@@ -12,7 +12,7 @@ import {
   UpdateCommentDto
 } from "./dto/commenting.dto";
 // import { Comment, Travel } from "@/travel/entities/stop.entity";
-import { Controller, Delete, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Patch, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Comment } from "./entities/comment.entity";
@@ -31,7 +31,7 @@ export class CommentController {
 
   @Post()
   @UseAuth()
-  public async addComment(@ActiveUser() user: User, dto: AddCommentDto) {
+  public async addComment(@ActiveUser() user: User, @Body() dto: AddCommentDto) {
     let travel = await this.travelRepo.findOneOrFail({
       where: { id: dto.travelId }
     });
@@ -49,7 +49,7 @@ export class CommentController {
   public async updateComment(
     @ActiveUser() user: User,
     @UUIDParam("id") id: string,
-    dto: UpdateCommentDto
+    @Body() dto: UpdateCommentDto
   ) {
     await ensureUpdate(
       this.commentRepo.update({ id, user }, { body: dto.body })

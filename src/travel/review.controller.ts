@@ -7,7 +7,7 @@ import {
   entityUpdated
 } from "@/framework/common/response-creators";
 import { AddReviewDto, UpdateReviewDto } from "./dto/commenting.dto";
-import { Controller, Delete, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Patch, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Review } from "./entities/review.entity";
@@ -26,14 +26,12 @@ export class ReviewController {
 
   @Post()
   @UseAuth()
-  public async addReview(@ActiveUser() user: User, dto: AddReviewDto) {
+  public async addReview(@ActiveUser() user: User, @Body() dto: AddReviewDto) {
     // TODO: validate the target travel is valid (has an order with the reviewer)
 
     let travel = await this.travelRepo.findOneOrFail({
       where: { id: dto.travelId }
     });
-
-    // this.reviewRepo.
 
     let review = new Review();
     review.body = dto.body;
@@ -50,7 +48,7 @@ export class ReviewController {
   public async updateReview(
     @ActiveUser() user: User,
     @UUIDParam("id") id: string,
-    dto: UpdateReviewDto
+    @Body() dto: UpdateReviewDto
   ) {
     await ensureUpdate(
       this.reviewRepo.update(
