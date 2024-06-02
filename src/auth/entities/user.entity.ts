@@ -8,6 +8,7 @@ import { Comment } from "@/travel/entities/comment.entity";
 import { Exclude } from "class-transformer";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { UserProfileImage } from "./user-profile-image.entity";
+import { ApiHideProperty } from "@nestjs/swagger";
 
 @Entity()
 export class User extends AppBaseEntity {
@@ -16,6 +17,7 @@ export class User extends AppBaseEntity {
 
   @Column()
   @Exclude({ toPlainOnly: true })
+  @ApiHideProperty()
   password: string;
 
   @Column()

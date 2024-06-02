@@ -3,7 +3,9 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./entities/user.entity";
 import { AuthService } from "./auth.service";
 import { LoginCredentialsDto, LoginResult } from "./dto/login.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Auth')
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

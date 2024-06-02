@@ -28,7 +28,9 @@ import { Review } from "./entities/review.entity";
 import { Stop } from "./entities/stop.entity";
 import { TravelStop } from "./entities/travel-stop.entity";
 import { Travel } from "./entities/travel.entity";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Travel Plan')
 @Controller("travel")
 export class TravelController {
   constructor(

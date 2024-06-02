@@ -1,4 +1,4 @@
-import { PartialType } from "@nestjs/swagger";
+import { OmitType, PartialType } from "@nestjs/swagger";
 import {
   IsInt,
   IsNotEmpty,
@@ -18,7 +18,9 @@ export class AddCommentDto {
   travelId: string;
 }
 
-export class UpdateCommentDto extends PartialType(AddCommentDto) {}
+export class UpdateCommentDto extends PartialType(
+  OmitType(AddCommentDto, ["travelId"] as const)
+) {}
 
 export class AddReviewDto {
   @IsString()
@@ -34,3 +36,7 @@ export class AddReviewDto {
   @IsUUID()
   travelId: string;
 }
+
+export class UpdateReviewDto extends PartialType(
+  OmitType(AddReviewDto, ["travelId"] as const)
+) {}

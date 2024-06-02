@@ -1,14 +1,17 @@
-export function entityCreated<T extends { id: string | number }>(entt: T) {
+import { NotFoundException } from "@nestjs/common";
+import { UpdateResult } from "typeorm";
+
+export function entityCreated<T extends { id: string | number }>(entt?: T) {
   return {
     message: "Created Successfully",
-    id: entt.id
+    ...(entt ? { id: entt.id } : {})
   };
 }
 
-export function entityUpdated<T extends { id: string | number }>(entt: T) {
+export function entityUpdated<T extends { id: string | number }>(entt?: T) {
   return {
     message: "Updated Successfully",
-    id: entt.id
+    ...(entt ? { id: entt.id } : {})
   };
 }
 
@@ -20,4 +23,11 @@ export function entityDeleted() {
 
 export function sendMessage(message: string, rest: object = {}) {
   return { message, ...rest };
+}
+
+export async function ensureUpdate(updateResultPromise: Promise<UpdateResult>) {
+  let result = await updateResultPromise;
+  if (result.affected === 0) {
+    throw new NotFoundException();
+  }
 }
