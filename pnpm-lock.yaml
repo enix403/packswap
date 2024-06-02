@@ -68,6 +68,9 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
+      socket.io:
+        specifier: ^4.7.5
+        version: 4.7.5
       typeorm:
         specifier: ^0.3.20
         version: 0.3.20(better-sqlite3@10.0.0)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5))
