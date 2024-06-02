@@ -2,11 +2,12 @@ import { User } from "@/auth/entities/user.entity";
 import { UUIDParam } from "@/framework/common/decorators";
 import { UseAuth, ActiveUser } from "@/framework/common/guards";
 import {
+  ensureUpdate,
   entityCreated,
   entityUpdated
 } from "@/framework/common/response-creators";
 import { AddReviewDto, UpdateReviewDto } from "./dto/commenting.dto";
-import { Controller, Delete, Post } from "@nestjs/common";
+import { Controller, Delete, Patch, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Review } from "./entities/review.entity";
@@ -44,16 +45,18 @@ export class ReviewController {
     return entityCreated(review);
   }
 
-  @Post(":id")
+  @Patch(":id")
   @UseAuth()
   public async updateReview(
     @ActiveUser() user: User,
     @UUIDParam("id") id: string,
     dto: UpdateReviewDto
   ) {
-    await this.reviewRepo.update(
-      { id, user },
-      { body: dto.body, rating: dto.rating }
+    await ensureUpdate(
+      this.reviewRepo.update(
+        { id, user },
+        { body: dto.body, rating: dto.rating }
+      )
     );
     return entityUpdated();
   }

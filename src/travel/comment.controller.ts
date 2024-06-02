@@ -12,7 +12,7 @@ import {
   UpdateCommentDto
 } from "./dto/commenting.dto";
 // import { Comment, Travel } from "@/travel/entities/stop.entity";
-import { Controller, Delete, Post } from "@nestjs/common";
+import { Controller, Delete, Patch, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Comment } from "./entities/comment.entity";
@@ -44,7 +44,7 @@ export class CommentController {
     return entityCreated(comment);
   }
 
-  @Post(":id")
+  @Patch(":id")
   @UseAuth()
   public async updateComment(
     @ActiveUser() user: User,
