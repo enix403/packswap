@@ -2,7 +2,6 @@ import path from "path";
 
 import { Module, ValidationPipe } from "@nestjs/common";
 
-import { AppController } from "./app.controller";
 import { AppConfigModule } from "@/framework/config/appconfig.module";
 import { DatabaseModule } from "@/framework/database/database.module";
 
@@ -29,7 +28,6 @@ import { ServeStaticModule } from "@nestjs/serve-static";
     ChatModule,
   ],
   exports: [DatabaseModule],
-  controllers: [AppController],
   providers: [
     {
       provide: APP_FILTER,

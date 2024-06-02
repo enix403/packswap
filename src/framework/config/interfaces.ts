@@ -14,4 +14,11 @@ export interface AppConfig {
   jwt: {
     secret: string
   };
+
+  swagger: {
+    siteTitle: string;
+    docTitle: string;
+    docDescription: string;
+    docVersion: string;
+  }
 }

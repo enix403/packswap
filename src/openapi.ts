@@ -1,19 +1,25 @@
 import type { INestApplication } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { AppConfigService } from "./framework/config/appconfig.service";
 
 export function setupSwagger(app: INestApplication) {
-  const config = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
-    .setVersion("1.0")
+  let configService = app.get(AppConfigService);
+  let config = configService.c.swagger;
+
+  const documentConfig = new DocumentBuilder()
+    .setTitle(config.docTitle)
+    .setDescription(config.docDescription)
+    .setVersion(config.docVersion)
     .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, config, {
-    operationIdFactory: (controllerKey, methodKey) => methodKey
+  const document = SwaggerModule.createDocument(app, documentConfig, {
+    operationIdFactory: (_controllerKey, methodKey) => methodKey
   });
 
-  SwaggerModule.setup("docs", app, document);
+  SwaggerModule.setup("docs", app, document, {
+    customSiteTitle: config.siteTitle,
+  });
 }
 
 /*

@@ -1,8 +1,8 @@
 import { plainToInstance } from "class-transformer";
 import {
-  IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
   validateSync
@@ -16,17 +16,17 @@ class EnvironmentVariables {
   NODE_ENV: string;
 
   // TODO: allow named pipes as bind target
-  @IsNumber()
+  @IsNumberString()
   @IsNotEmpty()
-  PORT: number;
+  PORT: string;
 
   @IsString()
   @IsNotEmpty()
   DB_HOST: string;
 
-  @IsNumber()
+  @IsNumberString()
   @IsNotEmpty()
-  DB_PORT: number;
+  DB_PORT: string;
 
   @IsString()
   @IsNotEmpty()
@@ -43,6 +43,26 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   JWT_SECRET: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  SWAGGER_SITE_TITLE?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  SWAGGER_DOC_TITLE?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  SWAGGER_DOC_DESCRIPTION?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  SWAGGER_DOC_VERSION?: string;
 }
 
 export function validateEnv(config: Record<string, unknown>) {
@@ -84,18 +104,25 @@ export function validateEnv(config: Record<string, unknown>) {
 
 // Loads the config from environment variables
 export function loadAppConfig(): AppConfig {
+  let env = process.env as unknown as EnvironmentVariables;
   return {
-    nodeEnv: (process.env.NODE_ENV! as any) || "development",
-    port: parseInt(process.env.PORT!, 10) || 3000,
+    nodeEnv: (env.NODE_ENV as any) || "development",
+    port: parseInt(env.PORT, 10) || 3000,
     database: {
-      host: process.env.DB_HOST! || "localhost",
-      port: parseInt(process.env.DB_PORT!, 10) || 5432,
-      username: process.env.DB_USER!,
-      password: process.env.DB_PASSWORD!,
-      name: process.env.DB_NAME!
+      host: env.DB_HOST || "localhost",
+      port: parseInt(env.DB_PORT, 10) || 5432,
+      username: env.DB_USER,
+      password: env.DB_PASSWORD,
+      name: env.DB_NAME
     },
     jwt: {
-      secret: process.env.JWT_SECRET!
+      secret: env.JWT_SECRET
+    },
+    swagger: {
+      siteTitle: env.SWAGGER_SITE_TITLE ?? "API",
+      docTitle: env.SWAGGER_DOC_TITLE ?? "API",
+      docDescription: env.SWAGGER_DOC_DESCRIPTION ?? "API Specification",
+      docVersion: env.SWAGGER_DOC_VERSION ?? "1.0",
     }
   };
 }
