@@ -64,7 +64,7 @@ export class AuthService {
   private async generateAccessToken(user: User): Promise<string> {
     return this.jwtService.signAsync({
       userId: user.id
-    } satisfies AccessTokenPayload);
+    } as AccessTokenPayload);
   }
 
   public async login({

@@ -84,10 +84,10 @@ export class AuthGuard implements CanActivate {
 
 export function UseAuth(roles?: string[], opts?: { allowPublic?: boolean }) {
   return applyDecorators(
-    ApiBearerAuth(),
+    UseGuards(AuthGuard),
     SetMetadata("roles", roles ?? []),
     ...(opts?.allowPublic ? [SetMetadata("isPublic", true)] : []),
-    UseGuards(AuthGuard)
+    ApiBearerAuth(),
   );
 }
 
