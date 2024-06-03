@@ -4,6 +4,7 @@ import {
   UnauthorizedException
 } from "@nestjs/common";
 import { compare, genSalt, hash } from "bcrypt";
+import { PostgresError } from "pg-error-enum";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
@@ -11,6 +12,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { LoginCredentialsDto } from "./dto/login.dto";
 import { LoginResult } from "./dto/login.dto";
 import { JwtService } from "@nestjs/jwt";
+import { maybeConflicts } from "@/framework/common/error-handlers";
 
 @Injectable()
 export class AuthService {
@@ -36,27 +38,23 @@ export class AuthService {
     return compare(password, hash);
   }
 
-  public async createUser(userDto: CreateUserDto, setId?: string | undefined): Promise<User> {
+  public async createUser(
+    userDto: CreateUserDto,
+    setId?: string | undefined
+  ): Promise<User> {
     let user = new User();
 
-    if (setId)
-      user.id = setId;
+    if (setId) user.id = setId;
+
     user.email = userDto.email;
     user.password = await this.hashPassword(userDto.password);
     user.firstName = userDto.firstName;
     user.lastName = userDto.lastName;
     user.cnic = userDto.cnic;
 
-    try {
-      await this.usersRepo.save(user);
-    } catch (error) {
-      // TODO: No magic constants
-      if (error.code === "23505") {
-        throw new ConflictException(`User already exists`);
-      }
-
-      throw error;
-    }
+    await maybeConflicts("User already exists", () =>
+      this.usersRepo.save(user)
+    );
 
     return user;
   }

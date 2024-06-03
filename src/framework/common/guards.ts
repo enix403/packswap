@@ -56,15 +56,8 @@ export class AuthGuard implements CanActivate {
 
       if (isPublic) return true;
 
-      // const allowedRoles = this.reflector.get<string[]>(
-      //   "roles",
-      //   context.getHandler()
-      // );
-
-      // TODO: check from user
-      // let rolesMatch = allowedRoles.includes(user.role);
-      let rolesMatch = user ? true : false;
-      if (rolesMatch) return true;
+      if (user)
+        return true;
 
       throw new ForbiddenException();
     } catch {
@@ -82,10 +75,9 @@ export class AuthGuard implements CanActivate {
   }
 }
 
-export function UseAuth(roles?: string[], opts?: { allowPublic?: boolean }) {
+export function UseAuth(opts?: { allowPublic?: boolean }) {
   return applyDecorators(
     UseGuards(AuthGuard),
-    SetMetadata("roles", roles ?? []),
     ...(opts?.allowPublic ? [SetMetadata("isPublic", true)] : []),
     ApiBearerAuth(),
   );
