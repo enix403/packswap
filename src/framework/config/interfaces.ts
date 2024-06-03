@@ -1,7 +1,6 @@
 export interface AppConfig {
   nodeEnv: string;
-  // TODO: allow named pipes as bind target
-  port: number;
+  port: number | string;
 
   database: {
     host: string;

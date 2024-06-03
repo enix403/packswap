@@ -3,9 +3,9 @@ import { red } from "colorette";
 import {
   IsNotEmpty,
   IsNumber,
-  IsNumberString,
   IsOptional,
   IsString,
+  isNumberString,
   validateSync
 } from "class-validator";
 import { AppConfig } from "./interfaces";
@@ -16,18 +16,18 @@ class EnvironmentVariables {
   @IsNotEmpty()
   NODE_ENV: string;
 
-  // TODO: allow named pipes as bind target
-  @IsNumberString()
+  // PORT is a string as it may be a named pipe instead of a TCP port number
+  @IsString()
   @IsNotEmpty()
-  PORT: string;
+  PORT: string | number;
 
   @IsString()
   @IsNotEmpty()
   DB_HOST: string;
 
-  @IsNumberString()
+  @IsNumber()
   @IsNotEmpty()
-  DB_PORT: string;
+  DB_PORT: number;
 
   @IsString()
   @IsNotEmpty()
@@ -99,12 +99,19 @@ export function validateEnv(config: Record<string, unknown>) {
 // Loads the config from environment variables
 export function loadAppConfig(): AppConfig {
   let env = process.env as unknown as EnvironmentVariables;
+
+  let appPort: string | number  = env.PORT;
+
+  if (isNumberString(appPort)) {
+    appPort = +appPort;
+  }
+
   return {
     nodeEnv: (env.NODE_ENV as any) || "development",
-    port: parseInt(env.PORT, 10) || 3000,
+    port: appPort,
     database: {
-      host: env.DB_HOST || "localhost",
-      port: parseInt(env.DB_PORT, 10) || 5432,
+      host: env.DB_HOST,
+      port: env.DB_PORT,
       username: env.DB_USER,
       password: env.DB_PASSWORD,
       name: env.DB_NAME
