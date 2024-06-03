@@ -1,4 +1,5 @@
 import { plainToInstance } from "class-transformer";
+import { red } from "colorette";
 import {
   IsNotEmpty,
   IsNumber,
@@ -86,17 +87,10 @@ export function validateEnv(config: Record<string, unknown>) {
     })
     .join("\n");
 
-  // TODO: use a library
-  const COLOR = {
-    reset: "\x1b[0m",
-    bright: "\x1b[1m",
-    fgRed: "\x1b[31m"
-  };
-
-  errorMessage = `${COLOR.fgRed}${COLOR.bright}${errorMessage}${COLOR.reset}`;
-
   if (errors.length > 0) {
-    throw new Error(errorMessage);
+    // TOOD: use logging service
+    console.log(red(errorMessage));
+    throw new Error("Environment validation failed");
   }
 
   return validatedConfig;
@@ -122,7 +116,7 @@ export function loadAppConfig(): AppConfig {
       siteTitle: env.SWAGGER_SITE_TITLE ?? "API",
       docTitle: env.SWAGGER_DOC_TITLE ?? "API",
       docDescription: env.SWAGGER_DOC_DESCRIPTION ?? "API Specification",
-      docVersion: env.SWAGGER_DOC_VERSION ?? "1.0",
+      docVersion: env.SWAGGER_DOC_VERSION ?? "1.0"
     }
   };
 }
